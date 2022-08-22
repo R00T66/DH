@@ -1,0 +1,100 @@
+repeat wait() until game.IsLoaded
+repeat wait() until game.Players.LocalPlayer
+
+local Hook; Hook = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+     local Args = { ... }
+     
+     if getnamecallmethod() == "FireServer" then
+        if self.Name == "MainEvent" or self.Name:lower() == "mainevent" then
+           if Args[1] == "TeleportDetect" then
+
+              return wait(9e9) 
+           end
+        end
+     end
+     
+     return Hook(self, ...)
+end))
+local DestroyCharacter; DestroyCharacter = function()
+   for i, x in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
+       if x:IsA("BasePart") then
+          if x.Name ~= "HumanoidRootPart" then
+             x:Destroy()
+          end
+       end
+   end
+end
+
+local Settings; Settings = {
+ ["SafePosition"] = CFrame.new(725.858948, 148.257492, -368.111206, 0.792798817, 2.39597697e-09, -0.609483421, 3.28355227e-08, 1, 4.66426826e-08, 0.609483421, -5.69909702e-08, 0.792798817),
+ ["Complete"] = false
+}
+
+local FindFirstGroup; FindFirstGroup = function()
+   local API_PREFIX = "https://groups.roblox.com/v1/users/"
+   local API_ENDFIX = tostring(game.Players.LocalPlayer.UserId) .. "/groups/roles"
+   local API_ENDPOINT = API_PREFIX .. API_ENDFIX
+   local API_RESULTSS = game:GetService("HttpService"):JSONDecode(game:HttpGet(API_ENDPOINT))
+
+   if API_RESULTSS.data ~= nil then
+   
+      local DataTable = API_RESULTSS.data
+      local Group;
+
+      for i, v in pairs(DataTable) do
+         Group = v.group.id
+      end
+
+      if Group == nil then
+         return false, "NO GROUP FOUND"
+      else
+         return true, Group
+      end
+   end
+end
+
+local GroupFound, GroupID = FindFirstGroup();
+
+if not GroupFound then
+   game:GetService("StarterGui"):SetCore("SendNotification", {Title = "ERROR", Text = "NO GROUP FOUND!", Duration = 5})
+   
+   return
+end
+
+game:GetService("RunService").Stepped:Connect(function(...)
+    local MainEvent = game:GetService("ReplicatedStorage"):WaitForChild("MainEvent")
+    local Backpack = game.Players.LocalPlayer.Backpack:GetChildren()
+    local Character = game.Players.LocalPlayer.Character:GetChildren()
+    local Tools = 0
+    
+    for i, v in pairs(Backpack) do
+       if v.Name == "[SprayCan]" then
+          v.Parent = game.Players.LocalPlayer.Character
+       end
+    end
+    
+    for i, v in pairs(Character) do
+       if v.Name == "[SprayCan]" then
+          Tools = Tools + 1
+       end
+    end
+
+    if Tools > 750 and Tools < 1250 then
+       warn("COUNT:", Tools)
+    elseif 1250 > Tools then
+       print("COMPLETE:", Tools)
+    end
+    
+    if Tools <= 1249 and not Settings["Complete"] then
+        if game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame ~= Settings["SafePosition"] then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Settings["SafePosition"]
+        end
+        MainEvent:FireServer("JoinCrew", tostring(GroupID))
+        MainEvent:FireServer("LeaveCrew")
+    else
+        if not Settings["Complete"] then
+            Settings["Complete"] = true
+            DestroyCharacter()
+        end
+    end
+end)
