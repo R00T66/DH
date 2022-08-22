@@ -93,7 +93,7 @@ game:GetService("RunService").Stepped:Connect(function(...)
 
     if Tools > 750 and Tools < 1250 then
        warn("COUNT:", Tools)
-    elseif 1250 > Tools and Tools > 750 then
+    elseif 1248 < Tools and not Settings["Complete"] then
        print("COMPLETE:", Tools)
     end
     
