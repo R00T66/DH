@@ -26,7 +26,20 @@ local DestroyCharacter; DestroyCharacter = function()
 end
 
 local Settings; Settings = {
- ["SafePosition"] = CFrame.new(725.858948, 148.257492, -368.111206, 0.792798817, 2.39597697e-09, -0.609483421, 3.28355227e-08, 1, 4.66426826e-08, 0.609483421, -5.69909702e-08, 0.792798817),
+ ["SafePosition"] = CFrame.new(
+     725.858948, 
+     148.257492, 
+     -368.111206, 
+     0.792798817, 
+     2.39597697e-09, 
+     -0.609483421, 
+     3.28355227e-08, 
+     1, 
+     4.66426826e-08, 
+     0.609483421, 
+     -5.69909702e-08, 
+     0.792798817
+ ),
  ["Complete"] = false
 }
 
@@ -69,6 +82,7 @@ if _G.CustomNotify == nil then
       })
    end
 end
+
 if not GroupFound then
    _G.CustomNotify(3, "ERROR", "NO GROUP FOUND!", 10)
    
