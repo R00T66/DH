@@ -40,25 +40,29 @@ local FindFirstGroup; FindFirstGroup = function()
    
       local DataTable = API_RESULTSS.data
       local Group;
+      local GroupName;
 
       for i, v in pairs(DataTable) do
          Group = v.group.id
+         GroupName = v.group.name
       end
 
       if Group == nil then
-         return false, "NO GROUP FOUND"
+         return false, "NO GROUP FOUND", nil
       else
-         return true, Group
+         return true, Group, GroupName
       end
    end
 end
 
-local GroupFound, GroupID = FindFirstGroup();
+local GroupFound, GroupID, GroupName = FindFirstGroup();
 
 if not GroupFound then
    game:GetService("StarterGui"):SetCore("SendNotification", {Title = "ERROR", Text = "NO GROUP FOUND!", Duration = 5})
    
    return
+elseif GroupFound then
+   game:GetService("StarterGui"):SetCore("SendNotification", {Title = "SUCCESS", Text = "USING GROUP: " .. GroupName:upper(), Duration = 15})
 end
 
 game:GetService("RunService").Stepped:Connect(function(...)
