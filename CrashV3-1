@@ -86,7 +86,7 @@ end
 if not GroupFound then
    _G.CustomNotify(3, "ERROR", "NO GROUP FOUND!", 10)
    
-   return
+   return false
 elseif GroupFound then
    _G.CustomNotify(1, "CRASHING", "USING GROUP: " .. GroupName:upper(), 10)
 end
