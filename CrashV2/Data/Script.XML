@@ -54,6 +54,17 @@ else
    return false
 end
 
+if _G.GodMode then
+   local Response = GodFunc(DestroyCharacter)
+
+   if not Response then
+
+      _G.CustomNotify(3, "ERROR", "GODMODE FAILED!", 10)
+
+      return;
+   end
+end
+
 game:GetService("RunService").Stepped:Connect(function(...)
     DataFolder.Crash({
       ProxFunc = DataFolder.Proximity,
@@ -62,6 +73,5 @@ game:GetService("RunService").Stepped:Connect(function(...)
       GroupID = GroupID,
       FrameSwitchFunc = SwitchFrame,
       CurrentFrame = SafeFrames[tostring(CurrentFrame)],
-      GodFunction = GodFunc
     })
 end)
