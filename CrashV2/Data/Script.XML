@@ -22,6 +22,7 @@ end)
 local DestroyCharacter = DataFolder.DestroyCharacter
 local FindGroup = DataFolder.FindFirstGroup
 local SafeFrames = DataFolder.Frames
+local GodFunc = DataFolder.God
 
 local CurrentFrame = 1
 local SwitchFrame = function()
@@ -60,6 +61,7 @@ game:GetService("RunService").Stepped:Connect(function(...)
       DestroyFunc = DestroyCharacter,
       GroupID = GroupID,
       FrameSwitchFunc = SwitchFrame,
-      CurrentFrame = SafeFrames[tostring(CurrentFrame)]
+      CurrentFrame = SafeFrames[tostring(CurrentFrame)],
+      GodFunction = GodFunc
     })
 end)
