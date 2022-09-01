@@ -25,6 +25,13 @@ local SafeFrames = DataFolder.Frames
 
 local CurrentFrame = 1
 local SwitchFrame = function()
+
+   if not _G.ProximityEnabled then
+      CurrentFrame = 1
+
+      return;
+   end
+
    if SafeFrames[tostring(CurrentFrame + 1)] ~= nil then
        CurrentFrame = CurrentFrame + 1
    else
