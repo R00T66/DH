@@ -123,5 +123,33 @@ return {
           end
        end
        
+    end,
+    God = function(DestroyFunc)
+          DestroyFunc()
+                      
+          game:GetService("Players").LocalPlayer.CharacterAdded:Wait()
+          
+          local Stats = game.Players.LocalPlayer.Character:WaitForChild("BodyEffects", 30)
+          local Spoof = Instance.new("Folder", game.Players.LocalPlayer.Character)
+          Spoof.Name = "FULLY_LOADED_CHAR"  
+         
+          if Stats ~= nil then
+          
+             if Stats:FindFirstChild("Dead") then
+                Stats:FindFirstChild("Dead"):Destroy()
+                Instance.new("BoolValue", Stats)
+             end
+         
+             if Stats:FindFirstChild("BreakingParts") then
+                Stats:FindFirstChild("BreakingParts"):Destroy()
+             end
+          
+             Instance.new("Folder", game.Players.LocalPlayer.Character).Name = "GOD_MODE"
+             
+             return true
+          end
+       end
+   
+       return false
     end
 }
