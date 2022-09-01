@@ -1,7 +1,23 @@
 repeat wait() until game.IsLoaded
 repeat wait() until game.Players.LocalPlayer
 
-local DataFolder = game:HttpGet("https://raw.githubusercontent.com/R00T66/DaHood/main/CrashV2/Data/DataFolder1.xml"); DataFolder = loadstring(DataFolder)()
+local DataFolder = game:HttpGet("https://raw.githubusercontent.com/R00T66/DaHood/main/CrashV2/Data/DataFolder.XML"); DataFolder = loadstring(DataFolder)()
+local Hook; Hook = hookmetamethod(game, "__namecall", function(self, ...)
+    local Args = { ... }
+    local Method = getnamecallmethod()
+
+    if Method == "FireServer" or Method:lower() == "fireserver" then
+       if self.Name == "MainEvent" or self.Name:lower() == "mainevent" then
+          if type(Args[1]) == "string" then
+             if Args[1] == "TeleportDetect" or Args[1]:lower() == "teleportdetect" then
+                return wait(9e9)
+             end
+          end
+       end
+    end
+
+    return Hook(self, ...)
+end)
 
 local DestroyCharacter = DataFolder.DestroyCharacter
 local FindGroup = DataFolder.FindFirstGroup
