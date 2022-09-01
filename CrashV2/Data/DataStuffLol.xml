@@ -42,11 +42,10 @@ return {
       end
    end,
    CustomNotify = function(Type, Title, Text, Duration)
-         game:GetService("StarterGui"):SetCore("SendNotification", {
-           Title = Title,
-           Text = Text,
-           Duration = Duration
-         })
-      end
-  end
+      game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = Title,
+        Text = Text,
+        Duration = Duration
+      })
+   end
 }
