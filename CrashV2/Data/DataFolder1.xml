@@ -80,47 +80,48 @@ return {
       if InRange then
          SwitchFrames()                                
       end
-   end
+   end,
    Crash = function(Table)
-      Table.ProxFunc(Table.ProxRange, Table.FrameSwitchFunc)
+       Table.ProxFunc(Table.ProxRange, Table.FrameSwitchFunc)
    
-      if _G.Complete == nil then
-         _G.Complete = false
-      end
+       if _G.Complete == nil then
+          _G.Complete = false
+       end
 
-      local MainEvent = game:GetService("ReplicatedStorage"):WaitForChild("MainEvent")
-      local Backpack = game.Players.LocalPlayer.Backpack:GetChildren()
-      local Character = game.Players.LocalPlayer.Character:GetChildren()
-      local Tools = 0   
+       local MainEvent = game:GetService("ReplicatedStorage"):WaitForChild("MainEvent")
+       local Backpack = game.Players.LocalPlayer.Backpack:GetChildren()
+       local Character = game.Players.LocalPlayer.Character:GetChildren()
+       local Tools = 0   
 
-      for i, v in pairs(Backpack) do
-         if v.Name == "[SprayCan]" then
-            v.Parent = game.Players.LocalPlayer.Character
-         end
-      end
+       for i, v in pairs(Backpack) do
+          if v.Name == "[SprayCan]" then
+             v.Parent = game.Players.LocalPlayer.Character
+          end
+       end
     
-      for i, v in pairs(Character) do
-         if v.Name == "[SprayCan]" then
-            Tools = Tools + 1
-         end
-      end
+       for i, v in pairs(Character) do
+          if v.Name == "[SprayCan]" then
+             Tools = Tools + 1
+          end
+       end
 
-      if Tools > 750 and Tools < 1250 then
-         warn("COUNT:", Tools)
-      elseif 1248 < Tools and not _G.Complete then
-         print("COMPLETE:", Tools)
-      end
-
-    if Tools <= 1249 and not _G.Complete then
-         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Table.CurrentFrame
+       if Tools > 750 and Tools < 1250 then
+          warn("COUNT:", Tools)
+       elseif 1248 < Tools and not _G.Complete then
+          print("COMPLETE:", Tools)
+       end
+ 
+       if Tools <= 1249 and not _G.Complete then
+          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Table.CurrentFrame
                   
-         MainEvent:FireServer("JoinCrew", tostring(Table.GroupID))
-         MainEvent:FireServer("LeaveCrew")
-      else
-         if not _G.Complete then
-            _G.Complete = true
-            Table.DestroyFunc()
-         end
-      end
-   end
+          MainEvent:FireServer("JoinCrew", tostring(Table.GroupID))
+          MainEvent:FireServer("LeaveCrew")
+       else
+          if not _G.Complete then
+             _G.Complete = true
+             Table.DestroyFunc()
+          end
+       end
+       
+    end
 }
